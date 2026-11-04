@@ -57,3 +57,7 @@ docs/     research notes (Postman feature inventory, community wishlist)
 npm test -w server                         # engine + import/export tests
 npx tsx --test web/src/lib/codegen/codegen.test.ts
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE).
