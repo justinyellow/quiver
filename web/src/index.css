@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #ffffff; --bg2: #f6f7f9; --bg3: #eceef2; --border: #e2e5ea; --fg: #1b1f27; --fg2: #5b6372; --fg3: #8b93a3;
+  --accent: #5b5bd6; --accent-fg: #ffffff; --ok: #1a9c5b; --warn: #c7811c; --err: #d64545; --info: #2b7fd6;
+  --sel: #e9e9fb;
+}
+.dark {
+  --bg: #16181d; --bg2: #1d2026; --bg3: #262a32; --border: #2e333c; --fg: #e6e8ec; --fg2: #a3a9b5; --fg3: #6f7684;
+  --accent: #7c7cf0; --accent-fg: #ffffff; --ok: #2fbf71; --warn: #e0a042; --err: #ef6b6b; --info: #5aa0f0;
+  --sel: #2a2a46;
+}
+html, body, #root { height: 100%; }
+body { background: var(--bg); color: var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Inter", sans-serif; font-size: 13px; }
+* { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+.btn { @apply inline-flex items-center gap-1.5 px-2.5 h-7 rounded text-xs font-medium border transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap; border-color: var(--border); background: var(--bg2); color: var(--fg); }
+.btn:hover:not(:disabled) { background: var(--bg3); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.1); background: var(--accent); }
+.btn-danger { color: var(--err); }
+.btn-ghost { background: transparent; border-color: transparent; }
+.btn-sm { @apply h-6 px-2 text-[11px]; }
+.input { @apply h-7 px-2 rounded border text-xs outline-none w-full; background: var(--bg); border-color: var(--border); color: var(--fg); }
+.input:focus { border-color: var(--accent); }
+.input-ghost { @apply h-7 px-1.5 text-xs outline-none w-full bg-transparent border border-transparent rounded; color: var(--fg); }
+.input-ghost:focus { border-color: var(--accent); background: var(--bg); }
+select.input { padding-right: 1.5rem; }
+textarea.input { @apply h-auto py-1.5; }
+.panel { background: var(--bg2); border-color: var(--border); }
+.tab { @apply px-3 h-8 text-xs flex items-center gap-1.5 border-b-2 border-transparent cursor-pointer select-none; color: var(--fg2); }
+.tab:hover { color: var(--fg); }
+.tab.active { color: var(--fg); border-color: var(--accent); }
+.badge { @apply inline-flex items-center px-1.5 h-4 rounded text-[10px] font-semibold uppercase tracking-wide; }
+.method { @apply font-bold text-[10px] w-10 shrink-0 text-right pr-1.5; }
+.m-GET { color: var(--ok); } .m-POST { color: var(--warn); } .m-PUT { color: var(--info); } .m-PATCH { color: #a855f7; } .m-DELETE { color: var(--err); } .m-HEAD, .m-OPTIONS { color: var(--fg3); }
+.row { @apply flex items-center gap-1 h-7 px-2 rounded cursor-pointer select-none; }
+.row:hover { background: var(--bg3); }
+.row.active { background: var(--sel); }
+.divider { border-color: var(--border); }
+.cm-editor { height: 100%; font-size: 12px; }
+.cm-editor.cm-focused { outline: none !important; }
+.cm-scroller { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important; }
+.kv-table td { @apply border-b align-middle; border-color: var(--border); }
+.kv-table input { @apply h-7 w-full bg-transparent px-2 text-xs outline-none; color: var(--fg); }
+.kv-table input:focus { background: var(--bg); }
+.muted { color: var(--fg2); } .faint { color: var(--fg3); }
+.link { color: var(--accent); } .link:hover { text-decoration: underline; }
+.status-2 { color: var(--ok); } .status-3 { color: var(--info); } .status-4 { color: var(--warn); } .status-5 { color: var(--err); }
+.resizer-v { width: 4px; cursor: col-resize; background: transparent; } .resizer-v:hover { background: var(--accent); }
+.resizer-h { height: 4px; cursor: row-resize; background: transparent; } .resizer-h:hover { background: var(--accent); }
+kbd { @apply px-1 rounded border text-[10px] mono; border-color: var(--border); background: var(--bg3); }
+.spin { animation: spin 1s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }
+.prose-sm p { margin: 0.25rem 0; } .prose-sm code { @apply mono px-1 rounded; background: var(--bg3); } .prose-sm pre { @apply mono p-2 rounded overflow-auto; background: var(--bg3); } .prose-sm h1,.prose-sm h2,.prose-sm h3 { font-weight: 600; margin: 0.6rem 0 0.2rem; } .prose-sm ul { list-style: disc; padding-left: 1.2rem; } .prose-sm a { color: var(--accent); text-decoration: underline; }
+
+.help-prose { line-height: 1.6; color: var(--fg); }
+.help-prose h1 { font-size: 1.35rem; font-weight: 600; margin: 0 0 0.75rem; }
+.help-prose h2 { font-size: 1rem; font-weight: 600; margin: 1.6rem 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+.help-prose h3 { font-size: 0.9rem; font-weight: 600; margin: 1.2rem 0 0.4rem; }
+.help-prose p { margin: 0.5rem 0; }
+.help-prose ul { list-style: disc; padding-left: 1.4rem; margin: 0.4rem 0; }
+.help-prose ol { list-style: decimal; padding-left: 1.4rem; margin: 0.4rem 0; }
+.help-prose li { margin: 0.2rem 0; }
+.help-prose li > ul { margin: 0.2rem 0; }
+.help-prose code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85em; padding: 0.05rem 0.3rem; border-radius: 4px; background: var(--bg3); }
+.help-prose pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; padding: 0.75rem; border-radius: 6px; background: var(--bg2); border: 1px solid var(--border); overflow-x: auto; margin: 0.6rem 0; }
+.help-prose pre code { background: none; padding: 0; }
+.help-prose table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; font-size: 12px; }
+.help-prose th, .help-prose td { border: 1px solid var(--border); padding: 0.35rem 0.5rem; text-align: left; vertical-align: top; }
+.help-prose th { background: var(--bg2); font-weight: 600; }
+.help-prose blockquote { border-left: 3px solid var(--accent); background: var(--sel); padding: 0.5rem 0.75rem; margin: 0.75rem 0; border-radius: 0 6px 6px 0; }
+.help-prose a { color: var(--accent); }
+.help-prose a:hover { text-decoration: underline; }
+.help-prose strong { font-weight: 600; }

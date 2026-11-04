@@ -1,0 +1,53 @@
+name: quiver
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: quiver-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: quiver
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-quiver}
+      POSTGRES_DB: quiver
+    volumes:
+      - quiver-db:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5440:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quiver"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    image: quiver:latest
+    container_name: quiver-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgres://quiver:${POSTGRES_PASSWORD:-quiver}@db:5432/quiver
+      BASE_URL: ${BASE_URL:-http://localhost:4000}
+      SESSION_SECRET: ${SESSION_SECRET:-}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-}
+      ALLOW_SIGNUP: ${ALLOW_SIGNUP:-false}
+      ALLOW_PRIVATE_TARGETS: ${ALLOW_PRIVATE_TARGETS:-true}
+      ALLOW_LOOPBACK_TARGETS: ${ALLOW_LOOPBACK_TARGETS:-false}
+      BLOCKED_HOSTS: ${BLOCKED_HOSTS:-}
+      TRUST_PROXY: ${TRUST_PROXY:-false}
+      SMTP_URL: ${SMTP_URL:-}
+      SMTP_FROM: ${SMTP_FROM:-quiver@localhost}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-}
+      OIDC_LABEL: ${OIDC_LABEL:-SSO}
+    ports:
+      - "${APP_PORT:-4000}:4000"
+    profiles: ["prod"]
+
+volumes:
+  quiver-db:
