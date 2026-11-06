@@ -45,13 +45,6 @@ export const config = {
     url: process.env.SMTP_URL || '',
     from: process.env.SMTP_FROM || 'quiver@localhost',
   },
-  oidc: {
-    issuer: process.env.OIDC_ISSUER || '',
-    clientId: process.env.OIDC_CLIENT_ID || '',
-    clientSecret: process.env.OIDC_CLIENT_SECRET || '',
-    // 'oidc' users are auto-provisioned on first login when true
-    autoProvision: env('OIDC_AUTO_PROVISION', 'true') === 'true',
-  },
   trustProxy: env('TRUST_PROXY', 'false') === 'true',
   // Local development convenience: auto sign-in on localhost. Never active when NODE_ENV=production.
   devAutoLogin: !isProd && env('DEV_AUTO_LOGIN', 'true') === 'true',

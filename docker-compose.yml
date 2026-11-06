@@ -41,10 +41,9 @@ services:
       TRUST_PROXY: ${TRUST_PROXY:-false}
       SMTP_URL: ${SMTP_URL:-}
       SMTP_FROM: ${SMTP_FROM:-quiver@localhost}
-      OIDC_ISSUER: ${OIDC_ISSUER:-}
-      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
-      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-}
-      OIDC_LABEL: ${OIDC_LABEL:-SSO}
+    env_file:
+      - path: .env
+        required: false
     ports:
       - "${APP_PORT:-4000}:4000"
     profiles: ["prod"]

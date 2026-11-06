@@ -10,6 +10,7 @@ npm install
 npm run dev                      # API on :4000, web on :5173
 ```
 Open http://localhost:5173 — the first account you create becomes the instance admin. Everything else is invite-only by default.
+In development you are signed in automatically as the first admin when browsing on localhost. Set `DEV_AUTO_LOGIN=false` to turn that off; it never runs with `NODE_ENV=production`.
 
 ## Production (Docker)
 
@@ -37,7 +38,7 @@ The `app` container serves the built UI and API on port 4000. Put it behind your
 
 **In-app help** — a getting-started guide with trackable steps, a searchable features overview, and a how-to page for every feature (`web/src/help/*.md`). Open them from the **?** menu in the top bar, the **?** button on each screen, the command palette, or `F1` for the current screen.
 
-**Security** — Argon2id passwords, signed httpOnly session cookies, CSRF origin checks, TOTP two-factor auth, OIDC SSO (Authelia, Keycloak, Entra, Google…), rate limiting, helmet CSP, SSRF guard with DNS pinning (link-local/metadata always blocked; private and loopback targets configurable; host blocklist), per-request TLS verification, response size caps, audit logging, invite-only signup.
+**Security** — Argon2id passwords, signed httpOnly session cookies, CSRF origin checks, TOTP two-factor auth, single sign-on with Google Workspace, AWS Cognito or any OIDC provider (domain and group restrictions, group-to-admin mapping, auto-provisioning, SSO-only mode; see [docs/sso.md](docs/sso.md)), rate limiting, helmet CSP, SSRF guard with DNS pinning (link-local/metadata always blocked; private and loopback targets configurable; host blocklist), per-request TLS verification, response size caps, audit logging, invite-only signup.
 
 ## Configuration
 

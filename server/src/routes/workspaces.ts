@@ -115,7 +115,7 @@ export async function workspaceRoutes(app: FastifyInstance) {
   // ---- instance admin
   app.get('/admin/users', async (req) => {
     requireAdmin(req)
-    return q(`SELECT id, email, name, role, totp_enabled, disabled, oidc_subject IS NOT NULL as sso, created_at, last_login_at FROM users ORDER BY created_at`)
+    return q(`SELECT id, email, name, role, totp_enabled, disabled, (SELECT COALESCE(json_agg(provider), '[]') FROM user_identities WHERE user_id=users.id) as sso, created_at, last_login_at FROM users ORDER BY created_at`)
   })
   app.patch('/admin/users/:id', async (req) => {
     const admin = requireAdmin(req)
@@ -170,7 +170,7 @@ export async function workspaceRoutes(app: FastifyInstance) {
   app.get('/admin/settings', async (req) => {
     requireAdmin(req)
     const s = await allSettings()
-    return { settings: s, env: { allowSignup: config.allowSignup, allowPrivateTargets: config.allowPrivateTargets, allowLoopbackTargets: config.allowLoopbackTargets || !config.isProd, blockedHosts: config.blockedHosts, oidcEnabled: !!config.oidc.issuer, smtpEnabled: !!config.smtp.url, baseUrl: config.baseUrl, maxResponseBytes: config.maxResponseBytes, scriptTimeoutMs: config.scriptTimeoutMs } }
+    return { settings: s, env: { allowSignup: config.allowSignup, allowPrivateTargets: config.allowPrivateTargets, allowLoopbackTargets: config.allowLoopbackTargets || !config.isProd, blockedHosts: config.blockedHosts, ssoProviders: (await import('../lib/sso.js')).providers.map((p) => ({ id: p.id, label: p.label, issuer: p.issuer, allowedDomains: p.allowedDomains, requiredGroups: p.requiredGroups, adminGroups: p.adminGroups, autoProvision: p.autoProvision })), passwordLogin: (await import('../lib/sso-config.js')).passwordLoginEnabled(), smtpEnabled: !!config.smtp.url, baseUrl: config.baseUrl, maxResponseBytes: config.maxResponseBytes, scriptTimeoutMs: config.scriptTimeoutMs } }
   })
   app.patch('/admin/settings', async (req) => {
     requireAdmin(req)

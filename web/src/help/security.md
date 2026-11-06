@@ -20,4 +20,10 @@ The list shows every signed-in browser with its IP address and user agent. **Rev
 
 ## Single sign-on
 
-When the server has OIDC configured, the login page shows a **Continue with SSO** button. Accounts are matched by email or created on first login, depending on server settings.
+If your server has single sign-on set up, the login page shows a button for each provider, such as **Continue with Google** or **Continue with Company SSO**.
+
+- **First sign-in:** Quiver links the identity to an existing account with the same email. If no account exists, it creates one, provided your organisation allows that.
+- **Several providers:** one account can have a password and several SSO identities linked. They are listed under **Single sign-on** on the account page.
+- **Sign-in refused:** the login page shows the reason, for example a wrong email domain or a missing group. Ask your admin to add you to the right group, or to send an invite.
+
+Whether SSO users can still use a password depends on server settings.

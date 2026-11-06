@@ -69,7 +69,7 @@ export async function buildServer() {
   })
 
   app.get('/api/health', async () => { await q('SELECT 1'); return { ok: true, version: '0.1.0' } })
-  app.get('/api/config', async () => ({ instanceName: (await getSetting<string>('instanceName')) || 'Quiver', baseUrl: config.baseUrl, oidcEnabled: !!config.oidc.issuer, oidcLabel: process.env.OIDC_LABEL || 'SSO' }))
+  app.get('/api/config', async () => ({ instanceName: (await getSetting<string>('instanceName')) || 'Quiver', baseUrl: config.baseUrl, providers: (await import('./lib/sso.js')).publicProviders() }))
 
   await app.register(async (api) => {
     await api.register(authRoutes)
