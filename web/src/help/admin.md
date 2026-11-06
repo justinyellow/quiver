@@ -25,6 +25,17 @@ Pending invites are listed and can be revoked.
 
 Cloud metadata and link-local addresses (`169.254.0.0/16`) are always blocked, so requests cannot be used to steal server credentials.
 
+## Single sign-on
+
+Google, AWS Cognito and generic OIDC providers are set with server environment variables. See `docs/sso.md` in the repository. **Settings** lists the configured providers with their domain and group rules.
+
+- **Domain and group rules** decide who can sign in. Quiver creates accounts automatically only when one of these rules is set.
+- **Admin groups** sync the instance role on every sign-in. Members become admins and everyone else becomes a user. The last admin is never demoted.
+- **SSO_DEFAULT_WORKSPACE** adds new SSO users to a team workspace automatically.
+- **AUTH_PASSWORD_LOGIN=false** turns off password sign-in, so only SSO is available.
+
+The **SSO** column on the Users tab shows which providers each person has linked.
+
 ## Audit log
 
 This is an instance-wide record of sign-ins, failed sign-ins, exports, secret reveals, member and role changes, deletions and settings changes. Each workspace admin also sees their own workspace's log under **Workspace settings → Audit log**.

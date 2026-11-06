@@ -274,4 +274,19 @@ export const migrations: string[] = [
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
   );
   `,
+  `
+  CREATE TABLE user_identities (
+    provider TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    email TEXT,
+    groups JSONB NOT NULL DEFAULT '[]',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    last_login_at TIMESTAMPTZ,
+    PRIMARY KEY (provider, subject)
+  );
+  CREATE INDEX user_identities_user ON user_identities(user_id);
+  INSERT INTO user_identities (provider, subject, user_id, email) SELECT 'oidc', oidc_subject, id, email FROM users WHERE oidc_subject IS NOT NULL;
+  ALTER TABLE users DROP COLUMN oidc_subject;
+  `,
 ]
